@@ -1,0 +1,80 @@
+import math
+import matplotlib.pyplot as plt
+Acid=[7,7,3,1,6,9]
+strength=[7,4,4,4,2,1]
+classs=['Bad','Bad','Good','Good','Good','Bad']
+Distance=[]
+print("*"*8,"KNN Classifier","*"*8)
+print("*"*6,"My Data on which i train my algorithm","*"*6)
+def print_table():
+    print("\nAcid|Strength|Class")
+    a = [Acid, strength, classs]
+    for i in range(len(Acid)):
+        lst2 = [item[i] for item in a]
+        print(lst2)
+print_table()
+print("\nGive value so that it can predict:-")
+acid=input("Value of Acid = ")
+st=input("Value of Strength = ")
+def calculate(acid,stre):
+    x=len(Acid)
+    for i in range(x):
+        Dist=(((Acid[i]-acid)**2)+((strength[i]-stre)**2))
+        math.sqrt(Dist)
+        Distance.append(Dist)
+calculate(int(acid),int(st))
+
+d = dict(zip(Distance, classs))
+
+#print(d)
+#newd=[]
+#Distance.sort
+#print(len(acid))
+plt.scatter(acid,st,color='yellow')
+for i in range(len(Acid)):
+    if classs[i]=='Bad':
+        plt.scatter(Acid[i],strength[i],color='blue')
+    elif classs[i]=='Good':
+        plt.scatter(Acid[i],strength[i],color='green')
+    
+    #plt.scatter(acid,st,color='yellow')
+        
+
+#plt.scatter(Acid[0],strength[0],color='blue') 
+#plt.scatter(Acid[1],strength[1],color='blue') 
+#plt.scatter(Acid[2],strength[2],color='red')
+#plt.scatter(Acid[3],strength[3],color='red') 
+#plt.scatter(Acid[4],strength[4],color='blue') 
+#plt.scatter(Acid[5],strength[5],color='blue')
+#plt.scatter(acid,st,color='yellow')
+
+#print(Distance)
+#as over k is 3 so we need only three values
+def threevalue():
+    Distance.sort()
+    newd=[]
+    for u in range(3):
+        newd.append(Distance[u])
+    #print(newd)
+a1_sorted_keys = sorted(d, key=d.get, reverse=True)
+#for r in a1_sorted_keys:
+    #print (r, d[r])
+
+threevalue()
+count_good=0
+count_bad=0
+for key,value in d.items():
+    if key==9 or key==13 or key==16:
+        if value=="Good":
+            count_good+=1
+        else:
+            count_bad+=1
+    else:
+        continue
+if count_good>count_bad:
+    print("Prediction that it is more probably Good!")
+elif count_good<count_bad:
+    print("Prediction that it is more probably Bad")
+else:
+    print("Probability is same!")
+plt.show()
